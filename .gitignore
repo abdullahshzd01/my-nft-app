@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 /src/Screens/test-tailwind.jsx
+/src/Screens/test-slider.jsx
+/src/Components/carousal.jsx
