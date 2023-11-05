@@ -7,16 +7,51 @@ import LeftArrow from "./icons/sliderLeftArrow";
 import RightArrow from "./icons/sliderRightArrow";
 
 function Dash(params) {
-    let [current, setCurrent] = useState(0);
+    // let [current, setCurrent] = useState(0);
+    const [nftData, setNftData] = useState(params.nftData);
+    const [nftData2, setNftData2] = useState(params.nftFetch);
 
-    let previousSlide = () => {
-        if (current === 0) setCurrent(params.nftData.length - 1);
-        else setCurrent(current - 1);
+    // let previousSlide = () => {
+    //     if (current === 0) setCurrent(params.nftData.length - 1);
+    //     else setCurrent(current - 1);
+    // };
+
+    // let nextSlide = () => {
+    //     if (current === params.nftData.length - 1) setCurrent(0);
+    //     else setCurrent(current + 1);
+    // };
+
+    const handleMoveRight = () => {
+        setNftData((prevData) => {
+            const lastItem = prevData.pop();
+            prevData.unshift(lastItem);
+            return [...prevData];
+        });
     };
 
-    let nextSlide = () => {
-        if (current === params.nftData.length - 1) setCurrent(0);
-        else setCurrent(current + 1);
+
+    const handleMoveRight2 = () => {
+        setNftData2((prevData) => {
+            const lastItem = prevData.pop();
+            prevData.unshift(lastItem);
+            return [...prevData];
+        });
+    };
+
+    const handleMoveLeft = () => {
+        setNftData((prevData) => {
+            const firstItem = prevData.shift();
+            prevData.push(firstItem);
+            return [...prevData];
+        });
+    };
+
+    const handleMoveLeft2 = () => {
+        setNftData2((prevData) => {
+            const firstItem = prevData.shift();
+            prevData.push(firstItem);
+            return [...prevData];
+        });
     };
 
     return (
@@ -44,14 +79,14 @@ function Dash(params) {
             </div>
 
             <div className="h-full w-full flex items-center px-16">
-                <div className="w-full min-w-[24.25rem] flex flex-row justify-between transition ease-in duration-40"  style={{transform: `translateX(-${current * 100}%)`}} >
+                <div className="w-full min-w-[24.25rem] flex flex-row justify-between" >
                     {
                         params.nftFetch.length > 0 ? (
-                            params.nftFetch.slice(0, 3).map((data) => {
+                            nftData2.slice(0, 3).map((data) => {
                                 return <NftCard key={data.id} nft_name={data.nft_name} nft_number={data.nft_number} nft={data.nft} nft_owner={data.nft_owner} nft_mintAddress={data.nft_mintAddress} nft_tokenAddress={data.nft_tokenAddress} />;
                             })
                         ) : (
-                            params.nftData.map((data) => {
+                            nftData.map((data) => {
                                 return <NftCard key={data.id} nft_name={data.nft_name} nft_number={data.nft_number} nft={data.nft} nft_owner={data.nft_owner} nft_mintAddress={data.nft_mintAddress} nft_tokenAddress={data.nft_tokenAddress} />;
                             })
                         )
@@ -61,15 +96,39 @@ function Dash(params) {
 
             <div className="h-[200px] w-full flex flex-col justify-center items-center">
                 <div className="bg-background h-[78px] w-[295px] rounded-[40px] p-[11px]">
-                    <div className="h-full w-full flex flex-row justify-between items-center">
-                        <button className="bg-grey_level_2 h-[56px] w-[56px] rounded-full flex justify-around items-center hover:cursor-pointer" onClick={previousSlide}>
+                    {/* <div className="h-full w-full flex flex-row justify-between items-center"> */}
+                    {/* <button className="bg-grey_level_2 h-[56px] w-[56px] rounded-full flex justify-around items-center hover:cursor-pointer" onClick={handleMoveLeft}>
                             <LeftArrow />
                         </button>
 
-                        <button className="bg-grey_level_2 h-[56px] w-[56px] rounded-full flex justify-around items-center hover:cursor-pointer" onClick={nextSlide}>
+                        <button className="bg-grey_level_2 h-[56px] w-[56px] rounded-full flex justify-around items-center hover:cursor-pointer" onClick={handleMoveRight}>
                             <RightArrow />
-                        </button>
-                    </div>
+                        </button> */}
+
+                    {
+                        params.nftFetch.length > 0 ? (
+                            <div className="h-full w-full flex flex-row justify-between items-center">
+                                <button className="bg-grey_level_2 h-[56px] w-[56px] rounded-full flex justify-around items-center hover:cursor-pointer" onClick={handleMoveLeft2}>
+                                    <LeftArrow />
+                                </button>
+
+                                <button className="bg-grey_level_2 h-[56px] w-[56px] rounded-full flex justify-around items-center hover:cursor-pointer" onClick={handleMoveRight2}>
+                                    <RightArrow />
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="h-full w-full flex flex-row justify-between items-center">
+                                <button className="bg-grey_level_2 h-[56px] w-[56px] rounded-full flex justify-around items-center hover:cursor-pointer" onClick={handleMoveLeft}>
+                                    <LeftArrow />
+                                </button>
+
+                                <button className="bg-grey_level_2 h-[56px] w-[56px] rounded-full flex justify-around items-center hover:cursor-pointer" onClick={handleMoveRight}>
+                                    <RightArrow />
+                                </button>
+                            </div>
+                        )
+                    }
+                    {/* </div> */}
                 </div>
             </div>
         </div>
